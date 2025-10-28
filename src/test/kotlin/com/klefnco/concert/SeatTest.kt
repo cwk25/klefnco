@@ -1,8 +1,6 @@
 package com.klefnco.concert
 
 import org.assertj.core.api.Assertions.assertThat
-import org.hamcrest.MatcherAssert
-import org.hamcrest.Matchers.samePropertyValuesAs
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import java.time.LocalDateTime
@@ -30,7 +28,9 @@ class SeatTest {
 
         val actual = seat.book()
 
-        MatcherAssert.assertThat(actual, samePropertyValuesAs(expected))
+        assertThat(actual)
+            .usingRecursiveComparison()
+            .isEqualTo(expected)
     }
 
     private fun concertEvent(): ConcertEvent {

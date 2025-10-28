@@ -40,9 +40,10 @@ class Seat(
     var bookingNumber: String? = null
 
     fun book(): Result<Unit>{
-        if (!available){
+        if (!available) {
             return Result.failure(SeatUnavailableException(rowNumber, seatNumber))
         }
+
         available = false
         return Result.success(Unit)
     }
