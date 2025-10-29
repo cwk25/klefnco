@@ -8,6 +8,7 @@ import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
+import org.springframework.data.domain.AbstractAggregateRoot
 
 @Entity
 @Table(name = "seats")
@@ -26,7 +27,7 @@ class Seat(
     val rowNumber: String,
 
     @field:Column(name = "seat_number")
-    val seatNumber: String): Aggregate() {
+    val seatNumber: String): AbstractAggregateRoot<Seat>() {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,7 +48,8 @@ class Seat(
         }
 
         available = false
-        domainEvents.add(SeatBooked(this, user))
+
+        registerEvent(SeatBooked(this, user))
 
         return Result.success(Unit)
     }

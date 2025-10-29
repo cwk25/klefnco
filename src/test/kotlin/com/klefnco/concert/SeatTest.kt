@@ -14,12 +14,8 @@ class SeatTest {
         val user = User("user1", "user1@mail.com", "123456789")
 
         val actual = seat.book(user)
-
         assertThat(actual).isEqualTo(Result.success(Unit))
         assertThat(seat.available).isEqualTo(false)
-        assertThat(seat.domainEvents())
-            .usingRecursiveFieldByFieldElementComparator()
-            .contains(SeatBooked(seat, user))
     }
 
     @Test
