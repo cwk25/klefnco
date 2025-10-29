@@ -1,3 +1,3 @@
 package com.klefnco.concert
 
-class SeatBookedEvent(seat: Seat, user: User)
+class SeatBooked(seat: Seat, user: User): DomainEvent

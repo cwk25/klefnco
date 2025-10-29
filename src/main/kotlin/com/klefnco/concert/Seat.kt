@@ -26,7 +26,7 @@ class Seat(
     val rowNumber: String,
 
     @field:Column(name = "seat_number")
-    val seatNumber: String) {
+    val seatNumber: String): Aggregate() {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,12 +39,16 @@ class Seat(
     @Column(name = "booking_number")
     var bookingNumber: String? = null
 
-    fun book(): Result<Unit>{
+    //TODO: create user and book with user (email and phone number)
+    //TODO: on create, raise event to create ticket
+    fun book(user: User): Result<Unit>{
         if (!available) {
             return Result.failure(SeatUnavailableException(rowNumber, seatNumber))
         }
 
         available = false
+        domainEvents.add(SeatBooked(this, user))
+
         return Result.success(Unit)
     }
 }

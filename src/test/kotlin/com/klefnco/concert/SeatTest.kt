@@ -11,22 +11,28 @@ class SeatTest {
     fun shouldBookSuccessfullyWhenTicketIsAvailable(){
         val concertEvent = concertEvent()
         val seat = Seat(concertEvent, "-", "-", "A", "1")
+        val user = User("user1", "user1@mail.com", "123456789")
 
-        val actual = seat.book()
+        val actual = seat.book(user)
 
         assertThat(actual).isEqualTo(Result.success(Unit))
         assertThat(seat.available).isEqualTo(false)
+        assertThat(seat.domainEvents())
+            .usingRecursiveFieldByFieldElementComparator()
+            .contains(SeatBooked(seat, user))
     }
 
     @Test
     fun shouldBookFailureWhenSeatIsNotAvailable(){
         val concertEvent = concertEvent()
         val seat = Seat(concertEvent, "-", "-", "A", "1")
-        seat.book()
+        val user = User("user1", "user1@mail.com", "123456789")
+
+        seat.book(user)
 
         val expected = Result.failure<SeatUnavailableException>(SeatUnavailableException("A", "1"))
 
-        val actual = seat.book()
+        val actual = seat.book(user)
 
         assertThat(actual)
             .usingRecursiveComparison()
