@@ -1,5 +1,6 @@
-package com.klefnco.concert
+package com.klefnco.eventmanager.domain.event
 
+import com.klefnco.eventmanager.domain.seat.Seat
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -11,11 +12,11 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(name = "concert_events")
-class ConcertEvent(val name: String, val dateTime: LocalDateTime){
+class Event(val name: String, val dateTime: LocalDateTime){
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0
 
-    @OneToMany(mappedBy = "concertEvent", cascade = [(CascadeType.REMOVE)], orphanRemoval = true)
+    @OneToMany(mappedBy = "event", cascade = [(CascadeType.REMOVE)], orphanRemoval = true)
     val tickets: MutableList<Seat> = mutableListOf()
 }

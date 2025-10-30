@@ -1,5 +1,7 @@
-package com.klefnco.concert
+package com.klefnco.eventmanager.domain.seat
 
+import com.klefnco.eventmanager.domain.event.Event
+import com.klefnco.eventmanager.domain.user.User
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -15,7 +17,7 @@ import org.springframework.data.domain.AbstractAggregateRoot
 class Seat(
     @ManyToOne
     @JoinColumn(name = "event_id")
-    val concertEvent : ConcertEvent,
+    val event: Event,
 
     @field:Column(name = "group_row")
     val groupRow: String,
